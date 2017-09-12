@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.rdlsmile.mobike.dao.TestDao">
+   
+	<sql id="testColumns">
+		
+		a.orderid AS "orderid",
+		a.userid AS "userid",
+		a.bikeid AS "bikeid",
+		a.biketype AS "biketype",
+		a.starttime AS "starttime",
+		a.startloc AS "startloc"
+	</sql>
+	
+	<sql id="testJoins">
+	</sql>
+    
+	<select id="get" resultType="com.rdlsmile.mobike.entity.Test">
+		SELECT 
+			<include refid="testColumns"/>
+		FROM test a
+		<include refid="testJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="com.rdlsmile.mobike.entity.Test">
+		SELECT 
+			<include refid="testColumns"/>
+		FROM test a
+		<include refid="testJoins"/>
+		<where>
+			
+		</where>
+		
+	</select>
+	
+	<select id="findAllList" resultType="com.rdlsmile.mobike.entity.Test">
+		SELECT 
+			<include refid="testColumns"/>
+		FROM test a
+		<include refid="testJoins"/>
+		<where>
+			
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="save">
+		INSERT INTO test_copy(
+			orderid,
+			userid,
+			bikeid,
+			biketype,
+			starttime,
+			startloc
+		) VALUES (
+			#{orderid},
+			#{userid},
+			#{bikeid},
+			#{biketype},
+			#{starttime},
+			#{startloc}
+		)
+	</insert>
+	
+	<!-- 执行里面的语句 -->
+	<insert id="insertAll">
+		#{0}
+	</insert>
+	
+	
+	
+	
+	
+	<update id="update">
+		UPDATE test SET 	
+			orderid = #{orderid},
+			userid = #{userid},
+			bikeid = #{bikeid},
+			biketype = #{biketype},
+			starttime = #{starttime},
+			startloc = #{startloc}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		DELETE FROM test
+		WHERE id = #{id}
+	</update>
+	
+</mapper>
